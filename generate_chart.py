@@ -1,12 +1,12 @@
 import pandas as pd
 import plotly.graph_objects as go
 
-# 1. Load the data, skipping the first row (the title)
-# We assume the columns are in the order: Date, All groups CPI, Trimmed mean
+# 1. Load the data
+# skiprows=1 skips the title row; names assigns the column headers
 df = pd.read_csv('Trimmed mean.csv', skiprows=1, names=['Date', 'All groups CPI', 'Trimmed mean'])
 
-# 2. Convert Date column
-df['Date'] = pd.to_datetime(df['Date'])
+# 2. Convert Date column using the format '%b-%y' for 'Mar-22' style dates
+df['Date'] = pd.to_datetime(df['Date'], format='%b-%y')
 
 # 3. Create the figure
 fig = go.Figure()
