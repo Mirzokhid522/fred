@@ -1,12 +1,14 @@
 import pandas as pd
 import plotly.graph_objects as go
 
-# 1. Load the data
-# Adjust 'Date', 'All groups CPI', 'Trimmed mean' to match your CSV headers exactly
-df = pd.read_csv('Trimmed mean.csv')
+# 1. Load the data, skipping the first row (the title)
+# We assume the columns are in the order: Date, All groups CPI, Trimmed mean
+df = pd.read_csv('Trimmed mean.csv', skiprows=1, names=['Date', 'All groups CPI', 'Trimmed mean'])
+
+# 2. Convert Date column
 df['Date'] = pd.to_datetime(df['Date'])
 
-# 2. Create the figure
+# 3. Create the figure
 fig = go.Figure()
 
 # Add All groups CPI line
@@ -19,7 +21,7 @@ fig.add_trace(go.Scatter(x=df['Date'], y=df['Trimmed mean'],
                     mode='lines', name='Trimmed mean',
                     line=dict(color='#1A5276', width=2)))
 
-# 3. Apply Dark Theme styling
+# 4. Apply Dark Theme styling
 fig.update_layout(
     plot_bgcolor='black',
     paper_bgcolor='black',
@@ -30,5 +32,5 @@ fig.update_layout(
     legend=dict(orientation="h", yanchor="bottom", y=-0.2, xanchor="center", x=0.5)
 )
 
-# 4. Save to index.html
+# 5. Save to index.html
 fig.write_html("index.html")
